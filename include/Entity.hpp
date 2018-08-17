@@ -5,24 +5,29 @@
 
 class Entity{
 public:
-  Entity(Point p=Point{0,0}, Size s=Size{0,0}, sf::RectangleShape sh=sf::RectangleShape()):position{p}, size{s}, sprite{sh}
+  Entity(int sp=1, Point p=Point{0,0}, Size s=Size{0,0}, sf::RectangleShape sh=sf::RectangleShape()):position{p}, target{p}, size{s}, sprite{sh}, speed{sp}
   {
     sprite.setPosition(position.x, position.y);
     sprite.setSize(sf::Vector2f{static_cast<float>(size.x), static_cast<float>(size.y)});
     sprite.setFillColor(sf::Color::Blue);
   }
   
-  bool pointInEntity(Point);
+  bool pointInEntity(Point) const;
   void render(sf::RenderWindow&);
-  void move(Point);
-  Point getPosition(){
+  Point getPosition() const{
     return position;
   }
+  void setTargetPosition(Point);
+  void update(std::vector<Entity>&);
+  bool collide(const Entity&) const;
   
 private:
-  Point position;
+  void move(Point);
+  
+  Point position, target;
   Size size;
   sf::RectangleShape sprite;
+  int speed;
 };
 
 #endif
