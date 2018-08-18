@@ -2,32 +2,37 @@
 #define ENTITY_HPP
 
 #include "Define.hpp"
+#include <memory>
 
 class Entity{
 public:
-  Entity(int sp=1, Point p=Point{0,0}, Size s=Size{0,0}, sf::RectangleShape sh=sf::RectangleShape()):position{p}, target{p}, size{s}, sprite{sh}, speed{sp}
+  Entity(sf::Color col, int sp=1, Point p=Point{0,0}, Size s=Size{0,0}, std::string imagePath):position{p}, target{p}, size{s}, speed{sp}, color{col}
   {
-    sprite.setPosition(position.x, position.y);
-    sprite.setSize(sf::Vector2f{static_cast<float>(size.x), static_cast<float>(size.y)});
-    sprite.setFillColor(sf::Color::Blue);
+    texture.loadFromFile(imagePath);
+    sprite.setTexture(texture);
   }
   
   bool pointInEntity(Point) const;
-  void render(sf::RenderWindow&);
+  virtual void render(sf::RenderWindow&);
   Point getPosition() const{
     return position;
   }
-  void setTargetPosition(Point);
-  void update(std::vector<Entity>&);
+  virtual void setTargetPosition(Point);
+  virtual void update(std::vector<std::shared_ptr<Entity>>);
   bool collide(const Entity&) const;
+  virtual Type getType(){
+    return Type::NoType;
+  }
   
-private:
-  void move(Point);
+protected:
+  virtual void move(Point);
   
   Point position, target;
   Size size;
-  sf::RectangleShape sprite;
+  sf::Sprite sprite;
+  sf::Texture texture;
   int speed;
+  sf::Color color;
 };
 
 #endif

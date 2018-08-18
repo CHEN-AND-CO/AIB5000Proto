@@ -21,4 +21,11 @@ Point operator+(const Point&, const Point&);
 
 using Size = Point;
 
+enum class Type{
+		TownCenter,
+		Villager,
+		NoType
+		
+};
+
 #endif

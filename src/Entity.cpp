@@ -1,4 +1,5 @@
 #include "Entity.hpp"
+#include <memory>
 
 bool Entity::pointInEntity(Point p) const{
   if(p.x >= position.x &&
@@ -23,41 +24,11 @@ void Entity::setTargetPosition(Point p){
   target = p;
 }
 
-void Entity::update(std::vector<Entity>&x){
-  Point nextPos{target.x-position.x, target.y-position.y};
-
-  if(nextPos.x > 0){
-    if(nextPos.x < 5){
-      nextPos.x = 0;
-    }else{
-      nextPos.x = speed;
-    }
-  }else if(nextPos.x < 0){
-    if(nextPos.x > -5){
-      nextPos.x = 0;
-    }else{
-      nextPos.x = -speed;
-    }
-  }
-
-  if(nextPos.y > 0){
-    if(nextPos.y < 5){
-      nextPos.y = 0;
-    }else{
-      nextPos.y = speed;
-    }
-  }else if(nextPos.y < 0){
-    if(nextPos.y > -5){
-      nextPos.y = 0;
-    }else{
-      nextPos.y = -speed;
-    }
-  }
-  
-  move(nextPos);
-}
-
 bool Entity::collide(const Entity& e) const{
   return e.pointInEntity(position) &&
-    e.pointInEntity(position+size);
+    e.pointInEntity(position+size) &&
+    e.pointInEntity(position+Point{size.x, 0}) &&
+    e.pointInEntity(position+Point{0, size.y});
 }
+
+void Entity::update(std::vector<std::shared_ptr<Entity>>){}
