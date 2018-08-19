@@ -6,7 +6,7 @@
 
 class Entity{
 public:
-  Entity(sf::Color col, int sp=1, Point p=Point{0,0}, Size s=Size{0,0}, std::string imagePath):position{p}, target{p}, size{s}, speed{sp}, color{col}
+  Entity(sf::Color col, int sp=1, Point p=Point{0,0}, Size s=Size{0,0}, std::string imagePath=""):position{p}, target{p}, size{s}, speed{sp}, color{col}
   {
     texture.loadFromFile(imagePath);
     sprite.setTexture(texture);
@@ -18,11 +18,10 @@ public:
     return position;
   }
   virtual void setTargetPosition(Point);
-  virtual void update(std::vector<std::shared_ptr<Entity>>);
+  
+  virtual void update(std::vector<std::shared_ptr<Entity>>){}
   bool collide(const Entity&) const;
-  virtual Type getType(){
-    return Type::NoType;
-  }
+  virtual Type getType() = 0;
   
 protected:
   virtual void move(Point);

@@ -30,5 +30,3 @@ bool Entity::collide(const Entity& e) const{
     e.pointInEntity(position+Point{size.x, 0}) &&
     e.pointInEntity(position+Point{0, size.y});
 }
-
-void Entity::update(std::vector<std::shared_ptr<Entity>>){}

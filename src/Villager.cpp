@@ -1,6 +1,6 @@
 #include "Villager.hpp"
 
-Villager::Villager(sf::Color c, Point p):Entity{c, 5, p, Size{10,10}, "villager.jpg"}
+Villager::Villager(sf::Color c, Point p):Entity{c, 5, p, Size{10,10}, "ressources/villager.jpg"}
 {}
 
 void Villager::update(std::vector<std::shared_ptr<Entity>>){
